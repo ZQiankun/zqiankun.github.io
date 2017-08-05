@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//zqiankun.github.io">
-  <title>Archives: 2017/8 | QianKun 的博客</title>
+  <title>at-command-usage | QianKun 的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="开发者,程序猿,编程,代码,开源,Developer">
-<meta property="og:type" content="website">
-<meta property="og:title" content="QianKun 的博客">
-<meta property="og:url" content="//zqiankun.github.io/archives/2017/08/index.html">
+  <meta name="description" content="at 命令用法 at 命令用来安排一个程序在未来进行一次执行。提交的任务都会被放在 /var/spool/at 目录下，并且到了执行时间时由 atd 守护进程来执行。 使用该服务前需要确认 atd.service 是否开启   命令格式： at [参数][时间]  时间格式 1234HH:MM              04:00HH:MM YYYY-MM-DD      04:00 2017-0">
+<meta name="keywords" content="shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="at-command-usage">
+<meta property="og:url" content="//zqiankun.github.io/2017/08/05/at-command-usage/index.html">
 <meta property="og:site_name" content="QianKun 的博客">
+<meta property="og:description" content="at 命令用法 at 命令用来安排一个程序在未来进行一次执行。提交的任务都会被放在 /var/spool/at 目录下，并且到了执行时间时由 atd 守护进程来执行。 使用该服务前需要确认 atd.service 是否开启   命令格式： at [参数][时间]  时间格式 1234HH:MM              04:00HH:MM YYYY-MM-DD      04:00 2017-0">
+<meta property="og:updated_time" content="2017-08-05T15:40:40.840Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="QianKun 的博客">
+<meta name="twitter:title" content="at-command-usage">
+<meta name="twitter:description" content="at 命令用法 at 命令用来安排一个程序在未来进行一次执行。提交的任务都会被放在 /var/spool/at 目录下，并且到了执行时间时由 atd 守护进程来执行。 使用该服务前需要确认 atd.service 是否开启   命令格式： at [参数][时间]  时间格式 1234HH:MM              04:00HH:MM YYYY-MM-DD      04:00 2017-0">
   
     <link rel="alternative" href="/atom.xml" title="QianKun 的博客" type="application/atom+xml">
   
@@ -142,36 +146,90 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-at-command-usage" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      at-command-usage
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/05/at-command-usage/" class="archive-article-date">
+
+        
+        <a href="/2017/08/05/at-command-usage/" class="archive-article-date">
   	<time datetime="2017-08-05T15:39:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-05</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/05/at-command-usage/">at-command-usage</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="at-命令用法"><a href="#at-命令用法" class="headerlink" title="at 命令用法"></a>at 命令用法</h2><blockquote>
+<p>at 命令用来安排一个程序在未来进行一次执行。提交的任务都会被放在 /var/spool/at 目录下，并且到了执行时间时由 atd 守护进程来执行。</p>
+<p>使用该服务前需要确认 atd.service 是否开启</p>
+</blockquote>
+<ol>
+<li><p><strong>命令格式：</strong></p>
+<p>at [参数][时间]</p>
+</li>
+<li><p><strong>时间格式</strong></p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">HH:MM              04:00</div><div class="line">HH:MM YYYY-MM-DD      04:00 2017-05-20</div><div class="line">HH:MM <span class="symbol">\[</span>am<span class="symbol">\|</span>pm<span class="symbol">\]</span><span class="symbol">\[</span>Month<span class="symbol">\]</span><span class="symbol">\[</span>Date<span class="symbol">\]</span>     04am March 17</div><div class="line">HH:MM <span class="symbol">\[</span>am<span class="symbol">\|</span>pm<span class="symbol">\]</span> + number <span class="symbol">\[</span>minutes<span class="symbol">\|</span>hours<span class="symbol">\|</span>days<span class="symbol">\|</span>weeks<span class="symbol">\]</span>    now+5minutes  or  04pm+2days</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>at的运行方式</strong></p>
+<p>at命令产生的计划任务以文档的形式写入 /var/spool/at 目录内，该任务等待 atd 服务取用与运行，因安全需常通过 /etc/at.allow 与 /etc/at.deny 这两个文件来对 at 进行限制。</p>
+<p>若 /etc/at.allow 存在，则写入文件中的使用者才可以使用；</p>
+<p>若 /etc/at.allow 不存在，则寻找 at.deny 文件，写入其中的使用者不能使用 at ；</p>
+<p>两者皆不存在，仅root可使用at</p>
+</li>
+<li><p><strong>实例参考</strong></p>
+<ul>
+<li><p>一天后的下午5点执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">at 5pm + 1days</div></pre></td></tr></table></figure>
+</li>
+<li><p>明天17点钟执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">at 17:00 tommorrow</div></pre></td></tr></table></figure>
+</li>
+<li><p>可以使用 atq 来查看系统执行任务列表</p>
+</li>
+<li><p>atrm 对任务进行删除</p>
+<p><code>atrm job-number</code></p>
+</li>
+<li><p>at -c job-number 对任务进行查看</p>
+</li>
+</ul>
+</li>
+</ol>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -183,7 +241,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -196,66 +254,102 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zqiankun.github.io/2017/08/05/at-command-usage/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/05/inotify-monitor-file-change/" class="archive-article-date">
-  	<time datetime="2017-08-05T14:58:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-05</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/08/05/inotify-monitor-file-change/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">inotify 监控文件变化</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/05/inotify-monitor-file-change/">inotify 监控文件变化</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">shell</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/技术笔记/" class="article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -278,8 +372,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
