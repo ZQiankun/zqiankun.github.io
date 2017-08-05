@@ -151,7 +151,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/05/inotify-monitor-file-change/">inotify</a>
+      <a class="article-title" href="/2017/08/05/inotify-monitor-file-change/">inotify 监控文件变化</a>
     </h1>
   
 
@@ -165,7 +165,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>inotify是一种文件变化通知机制，linux内核从2.6.13开始引入。本文主要说明在linux下如何使用inotify实时监控文件变更。</p>
+<p>inotify是一种文件变化通知机制，linux内核从2.6.13开始引入。在linux下可使用inotify实时监控文件变更。</p>
 </blockquote>
 <ol>
 <li><p><strong>如何知道使用的linux内核是否支持inotify机制</strong></p>
@@ -173,14 +173,15 @@
 </li>
 <li><p><strong>shell中inotify的使用</strong></p>
 <ul>
-<li><p>安装inotify-tools，提供inotifywait命令；</p>
+<li><p>安装inotify-tools，提供inotifywait命令</p>
 </li>
 <li><p>修改user监控的最大文件数</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="regexp">/proc/</span>sys<span class="regexp">/inotify/m</span>ax_user_watches   默认为<span class="number">8192</span> </div><div class="line">修改为echo <span class="number">81920000</span> &gt; <span class="regexp">/proc/</span>sys<span class="regexp">/inotify/m</span>ax_user_watches</div></pre></td></tr></table></figure>
+<p>/proc/sys/inotify/max_user_watches 默认为8192,修改为:</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo <span class="number">81920000</span> &gt; <span class="regexp">/proc/</span>sys<span class="regexp">/inotify/m</span>ax_user_watches</div></pre></td></tr></table></figure>
 </li>
 <li><p>将文件变化列表导入到文件中</p>
 <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">inotifywait -rm -e <span class="keyword">create</span> -<span class="built_in">e</span> <span class="keyword">delete</span> -<span class="built_in">e</span> modify  /dir1  /dir2 ... -o changefile.list</div></pre></td></tr></table></figure>
-<p>通过<code>-e</code>设置监控事件，包括访问、创建、修改等</p>
+<p>通过<code>-e</code>设置监控事件，包括访问、创建、修改等。</p>
 </li>
 </ul>
 </li>

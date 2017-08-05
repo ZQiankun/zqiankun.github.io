@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//zqiankun.github.io">
-  <title>inotify | QianKun 的博客</title>
+  <title>inotify 监控文件变化 | QianKun 的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="inotify是一种文件变化通知机制，linux内核从2.6.13开始引入。本文主要说明在linux下如何使用inotify实时监控文件变更。   如何知道使用的linux内核是否支持inotify机制 grep INOTIFY_USER /boot/config-$(uname -r)，若CONFIG_INOTIFY_USER = y，则说明内核已经支持inotify机制。  shell中in">
+  <meta name="description" content="inotify是一种文件变化通知机制，linux内核从2.6.13开始引入。在linux下可使用inotify实时监控文件变更。   如何知道使用的linux内核是否支持inotify机制 grep INOTIFY_USER /boot/config-$(uname -r)，若CONFIG_INOTIFY_USER = y，则说明内核已经支持inotify机制。  shell中inotify的使">
 <meta name="keywords" content="shell">
 <meta property="og:type" content="article">
-<meta property="og:title" content="inotify">
+<meta property="og:title" content="inotify 监控文件变化">
 <meta property="og:url" content="//zqiankun.github.io/2017/08/05/inotify-monitor-file-change/index.html">
 <meta property="og:site_name" content="QianKun 的博客">
-<meta property="og:description" content="inotify是一种文件变化通知机制，linux内核从2.6.13开始引入。本文主要说明在linux下如何使用inotify实时监控文件变更。   如何知道使用的linux内核是否支持inotify机制 grep INOTIFY_USER /boot/config-$(uname -r)，若CONFIG_INOTIFY_USER = y，则说明内核已经支持inotify机制。  shell中in">
-<meta property="og:updated_time" content="2017-08-05T15:02:45.178Z">
+<meta property="og:description" content="inotify是一种文件变化通知机制，linux内核从2.6.13开始引入。在linux下可使用inotify实时监控文件变更。   如何知道使用的linux内核是否支持inotify机制 grep INOTIFY_USER /boot/config-$(uname -r)，若CONFIG_INOTIFY_USER = y，则说明内核已经支持inotify机制。  shell中inotify的使">
+<meta property="og:updated_time" content="2017-08-05T15:17:41.481Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="inotify">
-<meta name="twitter:description" content="inotify是一种文件变化通知机制，linux内核从2.6.13开始引入。本文主要说明在linux下如何使用inotify实时监控文件变更。   如何知道使用的linux内核是否支持inotify机制 grep INOTIFY_USER /boot/config-$(uname -r)，若CONFIG_INOTIFY_USER = y，则说明内核已经支持inotify机制。  shell中in">
+<meta name="twitter:title" content="inotify 监控文件变化">
+<meta name="twitter:description" content="inotify是一种文件变化通知机制，linux内核从2.6.13开始引入。在linux下可使用inotify实时监控文件变更。   如何知道使用的linux内核是否支持inotify机制 grep INOTIFY_USER /boot/config-$(uname -r)，若CONFIG_INOTIFY_USER = y，则说明内核已经支持inotify机制。  shell中inotify的使">
   
     <link rel="alternative" href="/atom.xml" title="QianKun 的博客" type="application/atom+xml">
   
@@ -153,7 +153,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      inotify
+      inotify 监控文件变化
     </h1>
   
 
@@ -167,7 +167,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>inotify是一种文件变化通知机制，linux内核从2.6.13开始引入。本文主要说明在linux下如何使用inotify实时监控文件变更。</p>
+<p>inotify是一种文件变化通知机制，linux内核从2.6.13开始引入。在linux下可使用inotify实时监控文件变更。</p>
 </blockquote>
 <ol>
 <li><p><strong>如何知道使用的linux内核是否支持inotify机制</strong></p>
@@ -175,14 +175,15 @@
 </li>
 <li><p><strong>shell中inotify的使用</strong></p>
 <ul>
-<li><p>安装inotify-tools，提供inotifywait命令；</p>
+<li><p>安装inotify-tools，提供inotifywait命令</p>
 </li>
 <li><p>修改user监控的最大文件数</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="regexp">/proc/</span>sys<span class="regexp">/inotify/m</span>ax_user_watches   默认为<span class="number">8192</span> </div><div class="line">修改为echo <span class="number">81920000</span> &gt; <span class="regexp">/proc/</span>sys<span class="regexp">/inotify/m</span>ax_user_watches</div></pre></td></tr></table></figure>
+<p>/proc/sys/inotify/max_user_watches 默认为8192,修改为:</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo <span class="number">81920000</span> &gt; <span class="regexp">/proc/</span>sys<span class="regexp">/inotify/m</span>ax_user_watches</div></pre></td></tr></table></figure>
 </li>
 <li><p>将文件变化列表导入到文件中</p>
 <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">inotifywait -rm -e <span class="keyword">create</span> -<span class="built_in">e</span> <span class="keyword">delete</span> -<span class="built_in">e</span> modify  /dir1  /dir2 ... -o changefile.list</div></pre></td></tr></table></figure>
-<p>通过<code>-e</code>设置监控事件，包括访问、创建、修改等</p>
+<p>通过<code>-e</code>设置监控事件，包括访问、创建、修改等。</p>
 </li>
 </ul>
 </li>
