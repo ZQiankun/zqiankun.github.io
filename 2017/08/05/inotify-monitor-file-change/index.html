@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//zqiankun.github.io">
-  <title>Archives: 2017 | QianKun 的博客</title>
+  <title>inotify | QianKun 的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="开发者,程序猿,编程,代码,开源,Developer">
-<meta property="og:type" content="website">
-<meta property="og:title" content="QianKun 的博客">
-<meta property="og:url" content="//zqiankun.github.io/archives/2017/index.html">
+  <meta name="description" content="inotify是一种文件变化通知机制，linux内核从2.6.13开始引入。本文主要说明在linux下如何使用inotify实时监控文件变更。   如何知道使用的linux内核是否支持inotify机制 grep INOTIFY_USER /boot/config-$(uname -r)，若CONFIG_INOTIFY_USER = y，则说明内核已经支持inotify机制。  shell中in">
+<meta name="keywords" content="shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="inotify">
+<meta property="og:url" content="//zqiankun.github.io/2017/08/05/inotify-monitor-file-change/index.html">
 <meta property="og:site_name" content="QianKun 的博客">
+<meta property="og:description" content="inotify是一种文件变化通知机制，linux内核从2.6.13开始引入。本文主要说明在linux下如何使用inotify实时监控文件变更。   如何知道使用的linux内核是否支持inotify机制 grep INOTIFY_USER /boot/config-$(uname -r)，若CONFIG_INOTIFY_USER = y，则说明内核已经支持inotify机制。  shell中in">
+<meta property="og:updated_time" content="2017-08-05T15:02:45.178Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="QianKun 的博客">
+<meta name="twitter:title" content="inotify">
+<meta name="twitter:description" content="inotify是一种文件变化通知机制，linux内核从2.6.13开始引入。本文主要说明在linux下如何使用inotify实时监控文件变更。   如何知道使用的linux内核是否支持inotify机制 grep INOTIFY_USER /boot/config-$(uname -r)，若CONFIG_INOTIFY_USER = y，则说明内核已经支持inotify机制。  shell中in">
   
     <link rel="alternative" href="/atom.xml" title="QianKun 的博客" type="application/atom+xml">
   
@@ -138,36 +142,76 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-inotify-monitor-file-change" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/05/inotify-monitor-file-change/" class="archive-article-date">
-  	<time datetime="2017-08-05T14:58:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/05/inotify-monitor-file-change/">inotify</a>
+    <h1 class="article-title" itemprop="name">
+      inotify
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/08/05/inotify-monitor-file-change/" class="archive-article-date">
+  	<time datetime="2017-08-05T14:58:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>inotify是一种文件变化通知机制，linux内核从2.6.13开始引入。本文主要说明在linux下如何使用inotify实时监控文件变更。</p>
+</blockquote>
+<ol>
+<li><p><strong>如何知道使用的linux内核是否支持inotify机制</strong></p>
+<p><code>grep INOTIFY_USER /boot/config-$(uname -r)</code>，若CONFIG_INOTIFY_USER = y，则说明内核已经支持inotify机制。</p>
+</li>
+<li><p><strong>shell中inotify的使用</strong></p>
+<ul>
+<li><p>安装inotify-tools，提供inotifywait命令；</p>
+</li>
+<li><p>修改user监控的最大文件数</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="regexp">/proc/</span>sys<span class="regexp">/inotify/m</span>ax_user_watches   默认为<span class="number">8192</span> </div><div class="line">修改为echo <span class="number">81920000</span> &gt; <span class="regexp">/proc/</span>sys<span class="regexp">/inotify/m</span>ax_user_watches</div></pre></td></tr></table></figure>
+</li>
+<li><p>将文件变化列表导入到文件中</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">inotifywait -rm -e <span class="keyword">create</span> -<span class="built_in">e</span> <span class="keyword">delete</span> -<span class="built_in">e</span> modify  /dir1  /dir2 ... -o changefile.list</div></pre></td></tr></table></figure>
+<p>通过<code>-e</code>设置监控事件，包括访问、创建、修改等</p>
+</li>
+</ul>
+</li>
+</ol>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -179,19 +223,94 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://zqiankun.github.io/2017/08/05/inotify-monitor-file-change/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
+
   
 
-    
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
 
 
           </div>
@@ -214,8 +333,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
