@@ -199,37 +199,6 @@
 </ul>
 </li>
 </ol>
-<ol>
-<li><p><strong>命令格式：</strong></p>
-<p>at [参数][时间]</p>
-</li>
-<li><p><strong>时间格式</strong></p>
-<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">HH:MM              04:00</div><div class="line">HH:MM YYYY-MM-DD      04:00 2017-05-20</div><div class="line">HH:MM <span class="symbol">\[</span>am<span class="symbol">\|</span>pm<span class="symbol">\]</span><span class="symbol">\[</span>Month<span class="symbol">\]</span><span class="symbol">\[</span>Date<span class="symbol">\]</span>     04am March 17</div><div class="line">HH:MM <span class="symbol">\[</span>am<span class="symbol">\|</span>pm<span class="symbol">\]</span> + number <span class="symbol">\[</span>minutes<span class="symbol">\|</span>hours<span class="symbol">\|</span>days<span class="symbol">\|</span>weeks<span class="symbol">\]</span>    now+5minutes  or  04pm+2days</div></pre></td></tr></table></figure>
-</li>
-<li><p><strong>at的运行方式</strong></p>
-<p>at命令产生的计划任务以文档的形式写入 /var/spool/at 目录内，该任务等待 atd 服务取用与运行，因安全需常通过 /etc/at.allow 与 /etc/at.deny 这两个文件来对 at 进行限制。</p>
-<p>若 /etc/at.allow 存在，则写入文件中的使用者才可以使用；</p>
-<p>若 /etc/at.allow 不存在，则寻找 at.deny 文件，写入其中的使用者不能使用 at ；</p>
-<p>两者皆不存在，仅root可使用at</p>
-</li>
-<li><p><strong>实例参考</strong></p>
-<ul>
-<li><p>一天后的下午5点执行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">at 5pm + 1days</div></pre></td></tr></table></figure>
-</li>
-<li><p>明天17点钟执行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">at 17:00 tommorrow</div></pre></td></tr></table></figure>
-</li>
-<li><p>可以使用 atq 来查看系统执行任务列表</p>
-</li>
-<li><p>atrm 对任务进行删除</p>
-<p><code>atrm job-number</code></p>
-</li>
-<li><p>at -c job-number 对任务进行查看</p>
-</li>
-</ul>
-</li>
-</ol>
 
       
 
